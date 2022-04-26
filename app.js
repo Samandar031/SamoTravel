@@ -2,8 +2,10 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 
+app.use(express.json()); //qorovulcha
+
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours.json`, {
+  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`, {
     encoding: 'utf-8',
   })
 );
@@ -30,6 +32,42 @@ app.get('/', (req, res) => {
     status: 'Success',
     data: {
       reviews,
+    },
+  });
+});
+
+app.post(`/api/v1/tours`, (req, res) => {
+  const data = req.body;
+  const newId = tours[tours.length - 1].id + 1;
+
+  const complateObj = Object.assign({ id: newId }, data);
+
+  tours.push(complateObj);
+
+  fs.writeFile(
+    `${__dirname}/dev-data/data/tours.json`,
+    JSON.stringify(tours),
+    'utf-8',
+    (err) => {
+      res.status(201).json({
+        status: 'success',
+        data: {
+          tour: tours,
+        },
+      });
+    }
+  );
+});
+
+app.get('/api/v1/tours/:id', (req, res) => {
+  const id = +req.params.id;
+  const data = tours.find((val) => val.id === id);
+
+  console.log(tours);
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data,
     },
   });
 });
