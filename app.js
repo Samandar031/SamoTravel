@@ -95,10 +95,9 @@ app.delete('/api/v1/tours/:id', (req, res) => {
 
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
-    arr,
+    JSON.stringify(arr),
     'utf-8',
     (err) => {
-      JSON.stringify(arr);
       res.status(204).json({
         status: 'success',
         data: 'malumot ochirildi',
