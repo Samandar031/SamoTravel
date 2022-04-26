@@ -72,5 +72,39 @@ app.get('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+app.patch('/api/v1/tours/:id', (req, res) => {
+  const id = +req.params.id;
+  const data = tours.find((val) => val.id === id);
+
+  if (data) {
+    res.status(200).json({
+      status: 'success',
+      data: 'topdim',
+    });
+  } else if (!data) {
+    res.status(404).json({
+      status: 'success',
+      data: 'topolmadim',
+    });
+  }
+});
+
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const id = +req.params.id;
+  const arr = tours.filter((val) => val.id !== id);
+
+  fs.writeFile(
+    `${__dirname}/dev-data/data/tours-simple.json`,
+    JSON.stringify(arr),
+    'utf-8',
+    (err) => {
+      res.status(204).json({
+        status: 'success',
+        data: 'malumot ochirildi',
+      });
+    }
+  );
+});
+
 const port = 8003;
 app.listen(port, '127.0.0.1');
