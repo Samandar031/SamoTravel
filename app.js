@@ -91,13 +91,14 @@ app.patch('/api/v1/tours/:id', (req, res) => {
 
 app.delete('/api/v1/tours/:id', (req, res) => {
   const id = +req.params.id;
-  const arr = tours.filter((val) => val.id !== id);
+  const arr = tours.filter((val) => val.id != id);
 
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
-    JSON.stringify(arr),
+    arr,
     'utf-8',
     (err) => {
+      JSON.stringify(arr);
       res.status(204).json({
         status: 'success',
         data: 'malumot ochirildi',
