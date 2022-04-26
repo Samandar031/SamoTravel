@@ -59,6 +59,19 @@ app.post(`/api/v1/tours`, (req, res) => {
   );
 });
 
+// app.get('/api/v1/tours/:id', (req, res) => {
+//   const id = +req.params.id;
+//   const data = tours.find((val) => val.id === id);
+
+//   console.log(tours);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       data,
+//     },
+//   });
+// });
+
 app.get('/api/v1/tours/:id', (req, res) => {
   const id = +req.params.id;
   const data = tours.find((val) => val.id === id);
