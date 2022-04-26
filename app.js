@@ -8,13 +8,28 @@ const tours = JSON.parse(
   })
 );
 
+const reviews = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/reviews.json`, {
+    encoding: 'utf-8',
+  })
+);
+
 // console.log(tours);
+
+app.get('/api/v1/tours', (req, res) => {
+  res.status(200).json({
+    status: 'Success',
+    data: {
+      tours,
+    },
+  });
+});
 
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'Success',
     data: {
-      tours,
+      reviews,
     },
   });
 });
