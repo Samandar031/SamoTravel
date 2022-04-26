@@ -1,0 +1,23 @@
+{
+  "name": "samotravel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samandarqodirqulov/SamoTravel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samandarqodirqulov/SamoTravel/issues"
+  },
+  "homepage": "https://github.com/samandarqodirqulov/SamoTravel#readme",
+  "dependencies": {
+    "express": "^4.18.0",
+    "nodemon": "^2.0.15"
+  }
+}
