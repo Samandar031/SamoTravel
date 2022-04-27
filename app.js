@@ -1,16 +1,21 @@
 const express = require('express');
 const fs = require('fs');
+const { regexpToText } = require('nodemon/lib/utils');
 const app = express();
 
 app.use(express.json()); //qorovulcha
 
 app.use((req, res, next) => {
-  console.log(req);
+  if (req) {
+    req.time = Date.now();
+  }
+  if (res) {
+    res.time = Date.now();
+  }
   next();
 });
 
 app.use((req, res, next) => {
-  console.log(req);
   next();
 });
 
@@ -23,8 +28,12 @@ const magicClone = JSON.parse(
 );
 
 const getTour = (req, res) => {
+  console.log(req.time);
+
   res.status(200).json({
     status: 'Success',
+    time: req.time,
+    timel: res.time,
     data: {
       magic,
     },
@@ -45,6 +54,7 @@ const postTour = (req, res) => {
     (err) => {
       res.status(201).json({
         status: 'success',
+
         data: {
           tour: magic,
         },
@@ -77,6 +87,7 @@ const updataTour = (req, res) => {
       (err) => {
         res.status(200).json({
           status: 'succes',
+
           data: {
             magic,
           },
@@ -155,11 +166,14 @@ const deleteTour = (req, res) => {
 // app.get('/api/v1/magic', getTour);
 // app.post(`/api/v1/magic`, postTour);
 app.post('/api/v1/magic/:id', updataTour);
-app.get('/api/v1/magic/:id', getF);
+
+app.get('/api/v1/magic', getTour);
+
 app.patch('/api/v1/magic/:id', patchTour);
 app.delete('/api/v1/magic/:id', deleteTour);
+app.post('/api/v1/magic').post(postTour);
 
-app.route('/api/v1/magic').get(getTour).post(postTour);
+app.route('/api/v1/magic').get(getTour);
 
 app
   .route('/api/v1/magic/:id')
