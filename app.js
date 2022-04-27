@@ -12,7 +12,7 @@ const magicClone = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/magicClone.json`, 'utf-8')
 );
 
-app.get('/api/v1/magic/:id/:x/:y/:x', (req, res) => {
+app.get('/api/v1/magic', (req, res) => {
   res.status(200).json({
     status: 'Success',
     data: {
@@ -21,7 +21,27 @@ app.get('/api/v1/magic/:id/:x/:y/:x', (req, res) => {
   });
 });
 
-// app.post(`/api/v1/magic/:id/:x/:y/:x`, (req, res) => {});
+app.post(`/api/v1/magic`, (req, res) => {
+  const data = req.body;
+  const yangiId = magic[magic.length - 1].id + 1;
+
+  const qoshadiganId = Object.assign({ id: yangiId }, data);
+  magic.push(qoshadiganId);
+
+  fs.writeFile(
+    `${__dirname}/dev-data/data/magic-soft.json`,
+    JSON.stringify(magic),
+    'utf-8',
+    (err) => {
+      res.status(201).json({
+        status: 'success',
+        data: {
+          tour: magic,
+        },
+      });
+    }
+  );
+});
 
 app.post('/api/v1/magic', (req, res) => {
   const data = req.body;
