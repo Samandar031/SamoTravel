@@ -4,6 +4,16 @@ const app = express();
 
 app.use(express.json()); //qorovulcha
 
+app.use((req, res, next) => {
+  console.log(req);
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log(req);
+  next();
+});
+
 const magic = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/magic-soft-big.json`, 'utf-8')
 );
@@ -12,16 +22,16 @@ const magicClone = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/magicClone.json`, 'utf-8')
 );
 
-app.get('/api/v1/magic', (req, res) => {
+const getTour = (req, res) => {
   res.status(200).json({
     status: 'Success',
     data: {
       magic,
     },
   });
-});
+};
 
-app.post(`/api/v1/magic`, (req, res) => {
+const postTour = (req, res) => {
   const data = req.body;
   const yangiId = magic[magic.length - 1].id + 1;
 
@@ -41,9 +51,9 @@ app.post(`/api/v1/magic`, (req, res) => {
       });
     }
   );
-});
+};
 
-app.post('/api/v1/magic', (req, res) => {
+const updataTour = (req, res) => {
   const data = req.body;
   const dataId = +req.body.id;
   const Bor = magic.some((val) => {
@@ -94,9 +104,9 @@ app.post('/api/v1/magic', (req, res) => {
       }
     );
   }
-});
+};
 
-app.get('/api/v1/magic', (req, res) => {
+const getF = (req, res) => {
   const id = +req.params.id;
   const data = magic.find((val) => val.id == id);
 
@@ -106,9 +116,9 @@ app.get('/api/v1/magic', (req, res) => {
       data,
     },
   });
-});
+};
 
-app.patch('/api/v1/magic/:id', (req, res) => {
+const patchTour = (req, res) => {
   const id = +req.params.id;
   const data = magic.find((val) => val.id == id);
 
@@ -123,9 +133,9 @@ app.patch('/api/v1/magic/:id', (req, res) => {
       data: 'topolmadim',
     });
   }
-});
+};
 
-app.delete('/api/v1/magic/:id', (req, res) => {
+const deleteTour = (req, res) => {
   const id = +req.params.id;
   const number = magic.filter((val) => val.id != id);
 
@@ -140,7 +150,25 @@ app.delete('/api/v1/magic/:id', (req, res) => {
       });
     }
   );
-});
+};
+
+// app.get('/api/v1/magic', getTour);
+// app.post(`/api/v1/magic`, postTour);
+app.post('/api/v1/magic/:id', updataTour);
+app.get('/api/v1/magic/:id', getF);
+app.patch('/api/v1/magic/:id', patchTour);
+app.delete('/api/v1/magic/:id', deleteTour);
+
+app.route('/api/v1/magic').get(getTour).post(postTour);
+
+app
+  .route('/api/v1/magic/:id')
+  .delete(deleteTour)
+  .patch(patchTour)
+  .get(getF)
+  .post(updataTour);
+
+// //////////////////////////////////////////////////////////////////////////////////////
 
 const port = 8003;
 app.listen(port, '127.0.0.1');
