@@ -2,8 +2,11 @@ const express = require('express');
 const fs = require('fs');
 const { regexpToText } = require('nodemon/lib/utils');
 const app = express();
+const morgan = require('morgan');
 
 app.use(express.json()); //qorovulcha
+
+app.use(morgan('common'));
 
 app.use((req, res, next) => {
   if (req) {
@@ -27,18 +30,18 @@ const magicClone = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/magicClone.json`, 'utf-8')
 );
 
-const getTour = (req, res) => {
-  console.log(req.time);
+// const getTour = (req, res) => {
+//   console.log(req.time);
 
-  res.status(200).json({
-    status: 'Success',
-    time: req.time,
-    timel: res.time,
-    data: {
-      magic,
-    },
-  });
-};
+//   res.status(200).json({
+//     status: 'Success',
+//     time: req.time,
+//     timel: res.time,
+//     data: {
+//       magic,
+//     },
+//   });
+// };
 
 const postTour = (req, res) => {
   const data = req.body;
@@ -66,6 +69,7 @@ const postTour = (req, res) => {
 const updataTour = (req, res) => {
   const data = req.body;
   const dataId = +req.body.id;
+
   const Bor = magic.some((val) => {
     return val.id == dataId;
   });
