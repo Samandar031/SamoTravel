@@ -145,6 +145,18 @@ const getFunc = (req, res) => {
   });
 };
 
+const getFunc3 = (req, res) => {
+  const id = +req.params.id;
+  const data = magic.find((val) => val.id == id);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data,
+    },
+  });
+};
+
 const patchTour = (req, res) => {
   const id = +req.params.id;
   const data = magic.find((val) => val.id == id);
