@@ -30,18 +30,18 @@ const magicClone = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/magicClone.json`, 'utf-8')
 );
 
-// const getTour = (req, res) => {
-//   console.log(req.time);
+const getTour = (req, res) => {
+  console.log(req.time);
 
-//   res.status(200).json({
-//     status: 'Success',
-//     time: req.time,
-//     timel: res.time,
-//     data: {
-//       magic,
-//     },
-//   });
-// };
+  res.status(200).json({
+    status: 'Success',
+    time: req.time,
+    timel: res.time,
+    data: {
+      magic,
+    },
+  });
+};
 
 const postTour = (req, res) => {
   const data = req.body;
@@ -185,6 +185,55 @@ app
   .patch(patchTour)
   .get(getF)
   .post(updataTour);
+// /////////////////////////////////////////////////////////////
+const getUsers = (req, res) => {
+  console.log(req.time);
+
+  res.status(200).json({
+    status: 'Success',
+    message: 'hozircha ishlamaydi',
+  });
+};
+
+const getUser = (req, res) => {
+  console.log(req.time);
+  res.status(200).json({
+    status: 'Success',
+    message: 'hozircha ishlamaydi',
+  });
+};
+
+const postUsers = (req, res) => {
+  console.log(req.time);
+
+  res.status(201).json({
+    status: 'Success',
+    message: 'hozircha ishlamaydi',
+  });
+};
+
+const patchUsers = (req, res) => {
+  console.log(req.time);
+  res.status(200).json({
+    status: 'Success',
+    message: 'hozircha ishlamaydi',
+  });
+};
+
+const deleteUsers = (req, res) => {
+  console.log(req.time);
+  res.status(204).json({
+    status: 'Success',
+    message: 'hozircha ishlamaydi',
+  });
+};
+// users route
+app.route('/api/v1/users').get(getUsers).post(postUsers);
+app
+  .route('/api/v1/users/:id')
+  .get(getUser)
+  .patch(patchUsers)
+  .delete(deleteUsers);
 
 // //////////////////////////////////////////////////////////////////////////////////////
 
