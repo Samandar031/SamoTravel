@@ -10,3 +10,5 @@ const tourRouter = require('./router/tourRouter.js');
 app.use(express.json()); //qorovulcha
 
 app.use(morgan('common'));
+
+module.exports = app;
